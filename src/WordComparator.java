@@ -4,11 +4,30 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Comparator for ranking possible guesses
+ * @author Jai Wargacki
+ */
 public class WordComparator implements Comparator<String> {
+    /**
+     * set of possible words
+     */
     private Map<Character, Integer[]> scoring;
+    /**
+     * character array of known characters
+     */
     private char[] correct;
+    /**
+     * set of characters known to be in the word
+     */
     private Set<Character> contains;
 
+    /**
+     * Constructor for this WordComparator
+     * @param dictionary set of possible words
+     * @param correct character array of known characters
+     * @param contains set of characters known to be in the word
+     */
     public WordComparator(Set<String> dictionary, char[] correct, Set<Character> contains) {
         scoring = new HashMap<>();
         for(String s : dictionary) {
@@ -24,6 +43,9 @@ public class WordComparator implements Comparator<String> {
         this.contains = contains;
     }
 
+    /**
+     * Override of compare method to properly order two given words
+     */
     @Override
     public int compare(String word1, String word2) {
         int word1Score = 0;

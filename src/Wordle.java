@@ -4,12 +4,24 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * Object for a bot to play a game of Wordle
+ * @author Jai Wargacki
+ */
 public class Wordle {
+    /**
+     * Usage message for program
+     */
     private static final String USAGE_MSG = "Usage: Wordle [-d <words.txt>] [-b] [-w word] [-h]\n" +
                                             "\t-d\tprovide word list file\n" +
                                             "\t-b\tturn on bot\n" +
                                             "\t-w\tset secret word\n" +
                                             "\t-h\tfor this message";
+
+    /**
+     * Main method of Wordle program
+     * @param args contains optional flags and parameters for program
+     */
     public static void main(String[] args) {
         String filename = "../words.txt";
         boolean botFlag = false;

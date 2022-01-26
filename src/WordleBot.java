@@ -1,18 +1,41 @@
-import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.PriorityQueue;
-import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * Object for a bot to play a game of Wordle
+ * @author Jai Wargacki
+ */
 public class WordleBot {
+    /**
+     * Set of possible words
+     */
     private Set<String> dictionary;
+    /**
+     * Character array of correct letters
+     */
     private char[] correct;
+    /**
+     * String array keeping track of incorrect positions
+     */
     private String[] incorrect;
+    /**
+     * Set of letters in the secret word
+     */
     private Set<Character> contains;
+    /**
+     * Set of letters not in the secret word
+     */
     private Set<Character> incorrectOverall;
+    /**
+     * Collection of words to be considered guessing
+     */
     private PriorityQueue<String> guesses;
 
+    /**
+     * Constructor for a Wordle Bot
+     * @param dictionary set of possible words
+     */
     public WordleBot(Set<String> dictionary) {
         this.dictionary = dictionary;
         this.correct = new char[]{'0', '0', '0', '0', '0'};
@@ -22,6 +45,9 @@ public class WordleBot {
         populateGuesses();
     }
 
+    /**
+     * Populate the guesses fields with words to consider
+     */
     private void populateGuesses() {
         this.guesses = new PriorityQueue<>(new WordComparator(dictionary, correct, contains));
         for(String s : dictionary) {
@@ -32,6 +58,11 @@ public class WordleBot {
         }
     }
 
+    /**
+     * Determines if a word is a valid possible guess
+     * @param word the word to consider
+     * @return true if valid, false otherwise
+     */
     private boolean isValid(String word) {
         for(int i = 0; i < 5; i++) {
             char c = word.charAt(i);
@@ -47,6 +78,11 @@ public class WordleBot {
         return true;
     }
 
+    /**
+     * Update this bot based on the word guessed and the result
+     * @param word the word guessed
+     * @param result the result of the guessed word
+     */
     public void updateModel(String word, Status[] result) {
         for(int i = 0; i < 5; i++) {
             char c = word.charAt(i);
@@ -73,20 +109,5 @@ public class WordleBot {
                 return word;
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Set<String> dictionary = new HashSet<>();
-        try {
-            Scanner scanner = new Scanner(new File(args[0]));
-            while(scanner.hasNextLine()) {
-                dictionary.add(scanner.nextLine().strip().toLowerCase());
-            }
-            scanner.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-        WordleBot bot = new WordleBot(dictionary);
     }
 }

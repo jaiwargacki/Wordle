@@ -17,18 +17,40 @@ public class Wordle {
             System.out.println(e.getMessage());
             return;
         }
-        WordleGame game = new WordleGame("hello", dictionary);
-        Scanner scanner = new Scanner(System.in);
-        while(!game.gameOver()) {
-            try {
-                System.out.print(game.getTurn() + ": ");
-                game.guess(scanner.nextLine().strip());
-            } catch (GuessException e) {
-                System.out.println(e.getMessage());
-                continue;
-            }
-            System.out.println(game.getResult());
+        WordleGame game = new WordleGame(dictionary);
+        switch(args[1]) {
+            case("-b"):
+                WordleBot bot = new WordleBot(dictionary);
+                while(!game.gameOver()) {
+                    String word;
+                    try {
+                        word = bot.getNextGuess();
+                        System.out.println(game.getTurn() + ": " + word);
+                        game.guess(word);
+                    } catch (GuessException e) {
+                        System.out.println(e.getMessage());
+                        continue;
+                    }
+                    bot.updateModel(word, game.getResult());
+                    System.out.println(game.getResultString());
+                }
+                break;
+            case("-h"):
+                Scanner scanner = new Scanner(System.in);
+                while(!game.gameOver()) {
+                    try {
+                        System.out.print(game.getTurn() + ": ");
+                        game.guess(scanner.nextLine().strip());
+                    } catch (GuessException e) {
+                        System.out.println(e.getMessage());
+                        continue;
+                    }
+                    System.out.println(game.getResultString());
+                }
+                scanner.close();
+                break;
         }
-        scanner.close();
+        
+        
     }
 }

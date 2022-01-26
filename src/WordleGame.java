@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
@@ -8,8 +9,14 @@ public class WordleGame {
     private Set<String> dictionary;
 
 
-    public WordleGame(String word, Set<String> dictionary) {
-        this.secretWord = word;
+    public WordleGame(Set<String> dictionary) {
+        int item = new Random().nextInt(dictionary.size());
+        int i = 0;
+        for(String s : dictionary)
+        {
+            if (i++ == item)
+                this.secretWord = s;
+        }
         this.guesses = new Stack<String>();
         this.results = new Stack<Status[]>();
         this.dictionary = dictionary;
@@ -23,7 +30,11 @@ public class WordleGame {
         return guesses.size() >= 6 || (guesses.size() > 0 && guesses.peek().equals(secretWord));
     }
 
-    public String getResult() {
+    public Status[] getResult() {
+        return results.peek();
+    }
+
+    public String getResultString() {
         Status[] result = results.peek();
         return results.size() + ":" + result[0] + result[1] + result[2] + result[3] + result[4];
     }

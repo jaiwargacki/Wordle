@@ -8,6 +8,12 @@ public class WordleGame {
     private Stack<Status[]> results;
     private Set<String> dictionary;
 
+    public WordleGame(Set<String> dictionary, String word) {
+        this.secretWord = word;
+        this.guesses = new Stack<String>();
+        this.results = new Stack<Status[]>();
+        this.dictionary = dictionary;
+    }
 
     public WordleGame(Set<String> dictionary) {
         int item = new Random().nextInt(dictionary.size());
@@ -20,6 +26,22 @@ public class WordleGame {
         this.guesses = new Stack<String>();
         this.results = new Stack<Status[]>();
         this.dictionary = dictionary;
+    }
+
+    public String finalScore() {
+        String top = "\nWordle ";
+        String rows = "";
+        if (guesses.peek().equals(secretWord) || guesses.size() < 6) {
+            top += guesses.size() + "/6\n";
+        } else {
+            top += "X/6\n";
+        }
+        while(!results.empty()) {
+            Status[] result = results.pop();
+            rows = "" + result[0] + result[1] + result[2] + result[3] + result[4] + "\n" + rows;
+        }
+
+        return top + "\n" + rows;
     }
 
     public int getTurn() {

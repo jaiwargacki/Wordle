@@ -12,7 +12,7 @@ public class Wordle {
     /**
      * Usage message for program
      */
-    private static final String USAGE_MSG = "Usage: Wordle [-d <words.txt>] [-b] [-w word] [-h]\n" +
+    private static final String USAGE_MSG = "Usage: Wordle [-d <filename>] [-b] [-w <word>] [-h]\n" +
                                             "\t-d\tprovide word list file\n" +
                                             "\t-b\tturn on bot\n" +
                                             "\t-w\tset secret word\n" +

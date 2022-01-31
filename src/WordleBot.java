@@ -49,7 +49,7 @@ public class WordleBot {
      * Populate the guesses fields with words to consider
      */
     private void populateGuesses() {
-        this.guesses = new PriorityQueue<>(new WordComparator(dictionary, correct, contains));
+        this.guesses = new PriorityQueue<>(new WordComparator(dictionary));
         for(String s : dictionary) {
             if (isValid(s)) {
                 guesses.add(s);
@@ -99,7 +99,6 @@ public class WordleBot {
                     break;
             }
         }
-        populateGuesses();
     }
 
     public String getNextGuess() {
